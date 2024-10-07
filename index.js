@@ -4,6 +4,8 @@ const port = 3000;
 
 app.use(express.json());
 
+const students = []
+
 
 app.get("/", (req, res) => {
     res.json({
@@ -11,14 +13,30 @@ app.get("/", (req, res) => {
     })
 })
 
+const newStudent {
+    firstName,
+    lastName,
+}
+
 app.post("/", (req, res) => {
     const { firstName, lastName } = req.body
+    
+    const newStudent = {
+        firstName,
+        lastName,
+    }
 
+    const idcount = students.length + 1
+    newStudent.id = idcount
+    students.push(newStudent)
+    
 	res.status(201).json({
 		msg: "This the message from POST ",
         firstName,
         lastName,
 	})
+
+    const numberID = 
 })
 
 app.put("/", (req, res) => {
