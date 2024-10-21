@@ -1,38 +1,15 @@
 const express = require("express")
 const router = express.Router()
-
-const students = 
-[
-  {
-    "ID": 1,
-    "firstName": "John",
-    "lastName": "Doe"
-  },
-  {
-    "ID": 2,
-    "firstName": "Jane",
-    "lastName": "Smith"
-    },
-    {
-      "ID": 3,
-      "firstName": "Michael",
-      "lastName": "Johnson"
-    },
-    {
-      "ID": 4,
-      "firstName": "Emily",
-      "lastName": "Davis"
-    },
-    {
-      "ID": 5,
-      "firstName": "Chris",
-      "lastName": "Brown"
-    }
-    
-  ];
+const db = require("../database")
 
 router.get("/users", (req, res) => {
-	res.json(students)
+	db.all('SELECT * FROM users', [], (err, rows) => {
+		if (err) {
+		  res.status(500).json({ error: err.message });
+		} else {
+		  res.json(rows);
+		}
+	  });
 })
 
 router.post("/", (req, res) => {

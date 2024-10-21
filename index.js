@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const usersRouter = require("./routes/users.js");
+const db = require("./database")
 
 app.use(express.json());
   
@@ -14,3 +15,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+const sqlite3 = require("sqlite3").verbose()
