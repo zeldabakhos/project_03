@@ -1,61 +1,66 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-const students = []
-
+const students = [];
 
 app.get("/", (req, res) => {
-    res.json({
-        msg: "This the message"
-    })
-})
-
+  res.json(students);
+});
 
 app.post("/", (req, res) => {
-    const { firstName, lastName } = req.body
-    
-    const newStudent = {
-        firstName,
-        lastName,
-    }
+  const { firstName, lastName } = req.body;
 
-    const idcount = students.length + 1
-    newStudent.id = idcount
-    students.push(newStudent)
+  const newStudent = {
+    id: students.length + 1,
+    firstName,
+    lastName,
+  };
 
-	res.status(201).json({
-		msg: "This the message from POST ",
-        firstName,
-        lastName,
-	})
+  students.push(newStudent);
 
-})
+  res.status(201).json({
+    msg: "New student added",
+    student: newStudent,
+  });
+});
 
-app.put("/", (req, res) => {
-	const { firstName, lastName } = req.body
+app.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName } = req.body;
 
-	res.json({
-		msg: "This the message from PUT ",
-		firstName,
-		lastName,
-	})
-})
+  const student = students.find((s) => s.id === parseInt(id));
+
+  if (!student) {
+    return res.status(404).json({ msg: "Student not found" });
+  }
+
+  student.firstName = firstName || student.firstName;
+  student.lastName = lastName || student.lastName;
+
+  res.json({
+    msg: "Student updated successfully",
+    student,
+  });
+});
 
 app.delete("/:id", (req, res) => {
-	const {id} = req.params
-    res.json({
-		msg: "This the message from DELETE ",
-        id
-	})
-})
+  const { id } = req.params;
+  const studentIndex = students.findIndex((s) => s.id === parseInt(id));
+
+  if (studentIndex === -1) {
+    return res.status(404).json({ msg: "Student not found" });
+  }
+
+  students.splice(studentIndex, 1);
+
+  res.json({
+    msg: "Student deleted successfully",
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
-//Open your browser and go to http://localhost:3000. 
-// You should see the message "Welcome to our simple REST API!"
-

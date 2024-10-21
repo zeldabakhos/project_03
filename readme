@@ -1,0 +1,10 @@
+# Simple Student API
+
+This is a simple API built with JavaScript using Node.js and Express to handle student data. The API supports creating, retrieving, updating, and deleting student records. It is designed to work with Postman for testing purposes.
+
+# Technologies Used
+- **JavaScript**: Programming language used to create the API logic.
+- **Node.js**: JavaScript runtime used for server-side programming.
+- **Express**: Node.js framework used to handle HTTP requests and create the server.
+- **Nodemon**: Utility that automatically restarts the server when code changes are detected during development.
+- **Postman**: API client used to test the API endpoints.
